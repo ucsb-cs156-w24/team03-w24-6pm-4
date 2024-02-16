@@ -67,9 +67,9 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                                 .build();
 
                 MenuItemReview menuItemReview2 = MenuItemReview.builder()
-                                .diningCommonsCode("din2")
-                                .name("review2")
-                                .station("station2")
+                                .diningCommonsCode("de-la-guerra")
+                                .name("Latte")
+                                .station("Beverages")
                                 .build();
 
                 ArrayList<MenuItemReview> expectedReviews = new ArrayList<>();
