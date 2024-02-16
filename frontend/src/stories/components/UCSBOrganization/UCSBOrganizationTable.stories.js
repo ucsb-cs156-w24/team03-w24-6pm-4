@@ -1,9 +1,8 @@
 import React from 'react';
-import RestaurantTable from 'main/components/UCSBOrganization/UCSBOrganizationTable';
-import { UCSBOrganizationFixtures, restaurantFixtures } from 'fixtures/UCSBOrganizationFixtures';
-import { currentUserFixtures } from 'fixtures/UCSBOrganizationFixtures';
-import { rest } from "msw";
 import UCSBOrganizationTable from 'main/components/UCSBOrganization/UCSBOrganizationTable';
+import { UCSBOrganizationFixtures } from 'fixtures/UCSBOrganizationFixtures';
+import { currentUserFixtures } from 'fixtures/currentUserFixtures';
+import { rest } from "msw";
 
 export default {
     title: 'components/UCSBOrganization/UCSBOrganizationTable',
@@ -12,14 +11,14 @@ export default {
 
 const Template = (args) => {
     return (
-        <RestaurantTable {...args} />
+        <UCSBOrganizationTable {...args} />
     )
 };
 
 export const Empty = Template.bind({});
 
 Empty.args = {
-    restaurants: []
+    organizations: []
 };
 
 export const ThreeItemsOrdinaryUser = Template.bind({});
