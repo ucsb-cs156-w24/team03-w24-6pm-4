@@ -2,7 +2,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
 
-function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" }) {
+function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 
     
     // Stryker disable all
@@ -44,7 +44,7 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
                     type="text"
                     isInvalid={Boolean(errors.orgTranslationShort)}
                     {...register("orgTranslationShort", {
-                        required: "Organization translation (short) is required.",
+                        required: "Shortened organization translation is required.",
                         maxLength : {
                             value: 50,
                             message: "Max length 50 characters"
@@ -64,7 +64,7 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
                     type="text"
                     isInvalid={Boolean(errors.description)}
                     {...register("description", {
-                        required: "Description is required."
+                        required: "Organization translation is required."
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -108,4 +108,4 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
     )
 }
 
-export default RestaurantForm;
+export default UCSBOrganizationForm;
