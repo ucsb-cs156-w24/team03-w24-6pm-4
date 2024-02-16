@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
 
 function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Create" }) {
-
     
     // Stryker disable all
     const {
@@ -14,7 +13,6 @@ function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Cr
         { defaultValues: initialContents || {}, }
     );
     // Stryker restore all
-   
     const navigate = useNavigate();
 
     const testIdPrefix = "UCSBOrganizationForm";
@@ -22,19 +20,24 @@ function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Cr
     return (
         <Form onSubmit={handleSubmit(submitAction)}>
 
-            {initialContents && (
-                <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="orgCode">OrgCode</Form.Label>
-                    <Form.Control
-                        data-testid={testIdPrefix + "-orgCode"}
-                        id="orgCode"
-                        type="text"
-                        {...register("orgCode")}
-                        value={initialContents.id}
-                        disabled
-                    />
-                </Form.Group>
-            )}
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="orgCode">Organization Code</Form.Label>
+                <Form.Control
+                    data-testid={testIdPrefix + "-orgCode"}
+                    id="orgCode"
+                    type="text"
+                {...register("orgCode", {
+                    required: "Organization code is required.",
+                    maxLength : {
+                        value: 5,
+                        message: "Max length 5 characters"
+                    }
+                })}
+                />
+            <Form.Control.Feedback type="invalid">
+                {errors.orgCode?.message}
+            </Form.Control.Feedback>
+            </Form.Group>
 
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="orgTranslationShort">Organization Translation (short)</Form.Label>
@@ -63,29 +66,23 @@ function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Cr
                     id="orgTranslation"
                     type="text"
                     isInvalid={Boolean(errors.description)}
-                    {...register("description", {
+                    {...register("orgTranslation", {
                         required: "Organization translation is required."
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.description?.message}
+                    {errors.orgTranslation?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="inactive">Inactive</Form.Label>
-                <Form.Control
+                <Form.Check
                     data-testid={testIdPrefix + "-inactive"}
                     id="inactive"
-                    type="boolean"
-                    isInvalid={Boolean(errors.description)}
-                    {...register("inactive", {
-                        required: "Whether org is inactive is required."
-                    })}
+                    type="checkbox"
+                    {...register("inactive")}
                 />
-                <Form.Control.Feedback type="invalid">
-                    {errors.inactive?.message}
-                </Form.Control.Feedback>
             </Form.Group>
 
 

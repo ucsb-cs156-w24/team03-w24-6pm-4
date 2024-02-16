@@ -58,7 +58,7 @@ describe("UCSBOrganizationForm tests", () => {
         expect(await screen.findByTestId(`${testId}-orgTranslation`)).toBeInTheDocument();
         expect(await screen.findByTestId(`${testId}-inactive`)).toBeInTheDocument();
         expect(await screen.findByTestId(`${testId}-submit`)).toBeInTheDocument();
-        expect(screen.getByText(`OrgCode`)).toBeInTheDocument();
+        expect(screen.getByText(`Organization Code`)).toBeInTheDocument();
     });
 
 
@@ -93,7 +93,6 @@ describe("UCSBOrganizationForm tests", () => {
 
         await screen.findByText(/Shortened organization translation is required/);
         expect(screen.getByText(/Organization translation is required/)).toBeInTheDocument();
-        expect(screen.getByText(/Whether org is inactive is required/)).toBeInTheDocument();
 
         const nameInput = screen.getByTestId(`${testId}-orgTranslationShort`);
         fireEvent.change(nameInput, { target: { value: "a".repeat(51) } });
