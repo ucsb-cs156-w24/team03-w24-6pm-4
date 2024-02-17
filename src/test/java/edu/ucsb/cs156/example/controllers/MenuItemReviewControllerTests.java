@@ -93,7 +93,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                                 .reviewerEmail("cgaucho@ucsb.edu")
                                 .stars(5)
                                 .dateReviewed(ldt)
-                                .comments("I love the Apple Pie")
+                                .comments("I love the Apple Pie.")
                                 .build();
                                 
                 when(menuItemReviewRepository.findById(eq(9L))).thenReturn(Optional.of(menuItemReview));
@@ -142,7 +142,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                                 .reviewerEmail("cgaucho@ucsb.edu")
                                 .stars(5)
                                 .dateReviewed(ldt1)
-                                .comments("I love the Apple Pie")
+                                .comments("I love the Apple Pie.")
                                 .build();
 
                 LocalDateTime ldt2 = LocalDateTime.parse("2022-03-11T00:00:00");
@@ -152,7 +152,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                                 .reviewerEmail("ldelplaya@ucsb.edu")
                                 .stars(0)
                                 .dateReviewed(ldt2)
-                                .comments("I hate the Apple Pie")
+                                .comments("I hate the Apple Pie.")
                                 .build();
 
                 ArrayList<MenuItemReview> expectedDates = new ArrayList<>();
@@ -184,14 +184,14 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                                 .reviewerEmail("cgaucho@ucsb.edu")
                                 .stars(5)
                                 .dateReviewed(ldt)
-                                .comments("I love the Apple Pie")
+                                .comments("I love the Apple Pie.")
                                 .build();
 
                 when(menuItemReviewRepository.save(eq(menuItemReview))).thenReturn(menuItemReview);
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/menuitemreview/post?itemId=7&reviewerEmail=cgaucho@ucsb.edu&stars=5&dateReviewed=2022-01-03T00:00:00&comments=I love the Apple Pie")
+                                post("/api/menuitemreview/post?itemId=7&reviewerEmail=cgaucho@ucsb.edu&stars=5&dateReviewed=2022-01-03T00:00:00&comments=I love the Apple Pie.")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -214,7 +214,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                                 .reviewerEmail("cgaucho@ucsb.edu")
                                 .stars(5)
                                 .dateReviewed(ldt)
-                                .comments("I love the Apple Pie")
+                                .comments("I love the Apple Pie.")
                                 .build();
 
                 when(menuItemReviewRepository.findById(eq(9L))).thenReturn(Optional.of(menuItemReview));
@@ -259,14 +259,14 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                 // arrange
 
                 LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
-                LocalDateTime ldt2 = LocalDateTime.parse("2023-01-03T00:00:00");
+                LocalDateTime ldt2 = LocalDateTime.parse("2024-02-15T00:00:00");
 
                 MenuItemReview menuItemReviewOrig = MenuItemReview.builder()
                                 .itemId(7)
                                 .reviewerEmail("cgaucho@ucsb.edu")
                                 .stars(5)
                                 .dateReviewed(ldt1)
-                                .comments("I love the Apple Pie")
+                                .comments("I love the Apple Pie.")
                                 .build();
 
                 MenuItemReview menuItemReviewEdited = MenuItemReview.builder()
@@ -274,7 +274,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                                 .reviewerEmail("sora@ucsb.edu")
                                 .stars(1)
                                 .dateReviewed(ldt2)
-                                .comments("They toss pineapple on pizza")
+                                .comments("They toss pineapple on pizza!")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(menuItemReviewEdited);
@@ -309,7 +309,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                                 .reviewerEmail("cgaucho@ucsb.edu")
                                 .stars(5)
                                 .dateReviewed(ldt)
-                                .comments("I love the Apple Pie")
+                                .comments("I love the Apple Pie.")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(menuItemEditedReview);
