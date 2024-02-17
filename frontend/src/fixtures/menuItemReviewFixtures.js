@@ -25,7 +25,7 @@ const menuItemReviewFixtures = {
         {
             "id": 3,
             "diningCommonsCode": "de-la-guerra",
-            "name": "Latte",
+            "name": "Coffee Latte",
             "station": "Beverages"
         }
     ]

@@ -68,7 +68,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
 
                 MenuItemReview menuItemReview2 = MenuItemReview.builder()
                                 .diningCommonsCode("de-la-guerra")
-                                .name("Latte")
+                                .name("Coffee Latte")
                                 .station("Beverages")
                                 .build();
 
