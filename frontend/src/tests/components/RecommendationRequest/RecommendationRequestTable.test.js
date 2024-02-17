@@ -16,6 +16,36 @@ jest.mock('react-router-dom', () => ({
 describe("UserTable tests", () => {
   const queryClient = new QueryClient();
 
+  const expectedHeaders = ["Requester Email", "Professor Email", "Explanation", "Date Requested", "Date Needed", "Done"];
+  const expectedFields = ["requesterEmail", "professorEmail", "explanation", "dateRequested", "dateNeeded", "done"];
+  const testId = "RecommendationRequestTable";
+
+  test("renders empty table correctly", () => {
+    
+    // arrange
+    const currentUser = currentUserFixtures.adminUser;
+
+    // act
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <RecommendationRequestTable requests={[]} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+
+    // assert
+    expectedHeaders.forEach((headerText) => {
+      const header = screen.getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
+
+    expectedFields.forEach((field) => {
+      const fieldElement = screen.queryByTestId(`${testId}-cell-row-0-col-${field}`);
+      expect(fieldElement).not.toBeInTheDocument();
+    });
+  });
+
   test("Has the expected column headers and content for ordinary user", () => {
 
     const currentUser = currentUserFixtures.userOnly;
@@ -28,10 +58,6 @@ describe("UserTable tests", () => {
       </QueryClientProvider>
 
     );
-
-    const expectedHeaders = ["id", "Requester Email", "Professor Email", "Explanation", "Date Requested", "Date Needed", "Done"];
-    const expectedFields = ["id", "requesterEmail", "professorEmail", "explanation", "dateRequested", "dateNeeded", "done"];
-    const testId = "RecommendationRequestTable";
 
     expectedHeaders.forEach((headerText) => {
       const header = screen.getByText(headerText);
@@ -67,8 +93,8 @@ describe("UserTable tests", () => {
 
     );
 
-    const expectedHeaders = ["id", "Requester Email", "Professor Email", "Explanation", "Date Requested", "Date Needed", "Done"];
-    const expectedFields = ["id", "requesterEmail", "professorEmail", "explanation", "dateRequested", "dateNeeded", "done"];
+    const expectedHeaders = ["Requester Email", "Professor Email", "Explanation", "Date Requested", "Date Needed", "Done"];
+    const expectedFields = ["requesterEmail", "professorEmail", "explanation", "dateRequested", "dateNeeded", "done"];
     const testId = "RecommendationRequestTable";
 
     expectedHeaders.forEach((headerText) => {
@@ -116,6 +142,58 @@ describe("UserTable tests", () => {
 
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/recommendationrequests/edit/2'));
 
+  });
+
+  test("Edit button navigates to the edit page", async () => {
+    // arrange
+    const currentUser = currentUserFixtures.adminUser;
+
+    // act - render the component
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <RecommendationRequestTable requests={recommendationRequestFixtures.threeRecommendationRequests} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+
+    // assert - check that the expected content is rendered
+    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-requesterEmail`)).toHaveTextContent("jeangenshin@ucsb.edu");
+
+    const editButton = screen.getByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    expect(editButton).toBeInTheDocument();
+
+    // act - click the edit button
+    fireEvent.click(editButton);
+
+    // assert - check that the navigate function was called with the expected path
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/recommendationrequests/edit/2'));
+
+  });
+
+  test("Delete button calls delete callback", async () => {
+    // arrange
+    const currentUser = currentUserFixtures.adminUser;
+
+    // act - render the component
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <RecommendationRequestTable requests={recommendationRequestFixtures.threeRecommendationRequests} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+
+    // assert - check that the expected content is rendered
+    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-requesterEmail`)).toHaveTextContent("jeangenshin@ucsb.edu");
+
+    const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+    expect(deleteButton).toBeInTheDocument();
+
+    // act - click the delete button
+    fireEvent.click(deleteButton);
   });
 
 });
