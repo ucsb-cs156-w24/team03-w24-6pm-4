@@ -34,7 +34,6 @@ export default function MenuItemReviewTable({
             Header: 'id',
             accessor: 'id', // accessor is the "key" in the data
         },
-
         {
             Header: 'Dining Commons Code',
             accessor: 'diningCommonsCode',
