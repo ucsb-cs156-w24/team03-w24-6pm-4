@@ -16,7 +16,7 @@ jest.mock('react-router-dom', () => ({
 describe("MenuItemReviewForm tests", () => {
     const queryClient = new QueryClient();
 
-    const expectedHeaders = ["Dining Commons Code", "Name", "Station"];
+    const expectedHeaders = ["Item ID", "Reviewer Email", "Stars", "Date Reviewed", "Comments"];
     const testId = "MenuItemReviewForm";
 
     test("renders correctly with no initialContents", async () => {
@@ -54,7 +54,18 @@ describe("MenuItemReviewForm tests", () => {
         });
 
         expect(await screen.findByTestId(`${testId}-id`)).toBeInTheDocument();
-        expect(screen.getByText(`Id`)).toBeInTheDocument();
+        expect(await screen.findByTestId(`${testId}-itemId`)).toBeInTheDocument();
+        expect(await screen.findByTestId(`${testId}-reviewerEmail`)).toBeInTheDocument();
+        expect(await screen.findByTestId(`${testId}-stars`)).toBeInTheDocument();
+        expect(await screen.findByTestId(`${testId}-dateReviewed`)).toBeInTheDocument();
+        expect(await screen.findByTestId(`${testId}-comments`)).toBeInTheDocument();
+        expect(await screen.findByTestId(`${testId}-submit`)).toBeInTheDocument();
+        expect(screen.getByText(`ID`)).toBeInTheDocument();
+        expect(screen.getByText(`Item ID`)).toBeInTheDocument();
+        expect(screen.getByText(`Reviewer Email`)).toBeInTheDocument();
+        expect(screen.getByText(`Stars`)).toBeInTheDocument();
+        expect(screen.getByText(`Date Reviewed`)).toBeInTheDocument();
+        expect(screen.getByText(`Comments`)).toBeInTheDocument();
     });
 
 
@@ -87,17 +98,43 @@ describe("MenuItemReviewForm tests", () => {
         const submitButton = screen.getByText(/Create/);
         fireEvent.click(submitButton);
 
-        await screen.findByText(/Dining Commons Code is required./);
-        expect(screen.getByText(/Name is required./)).toBeInTheDocument();
-        expect(screen.getByText(/Station is required./)).toBeInTheDocument();
+        await screen.findByText(/Item ID is required./);
+        expect(screen.getByText(/Reviewer Email is required./)).toBeInTheDocument();
+        expect(screen.getByText(/Star rating is required./)).toBeInTheDocument();
+        expect(screen.getByText(/Date Reviewed is required./)).toBeInTheDocument();
+        expect(screen.getByText(/Comment is required./)).toBeInTheDocument();
 
-        const nameInput = screen.getByTestId(`${testId}-name`);
-        fireEvent.change(nameInput, { target: { value: "a".repeat(31) } });
+        const reviewerEmailInput = screen.getByTestId(`${testId}-reviewerEmail`);
+        fireEvent.change(reviewerEmailInput, { target: { value: "a".repeat(31) } });
         fireEvent.click(submitButton);
 
         await waitFor(() => {
             expect(screen.getByText(/Max length 30 characters/)).toBeInTheDocument();
         });
+
+
+        const starsInput = screen.getByTestId(`${testId}-stars`);
+        fireEvent.change(starsInput, { target: { value: -1 } });
+        fireEvent.click(submitButton);
+        await waitFor(() => {
+            expect(screen.getByText(/Minimum value is 0/)).toBeInTheDocument();
+        });
+
+        fireEvent.change(starsInput, { target: { value: 6 } });
+        fireEvent.click(submitButton);
+        await waitFor(() => {
+            expect(screen.getByText(/Maximum value is 5/)).toBeInTheDocument();
+        });
+
+
+        const commentsInput = screen.getByTestId(`${testId}-comments`);
+        fireEvent.change(commentsInput, { target: { value: "a".repeat(501) } });
+        fireEvent.click(submitButton);
+
+        await waitFor(() => {
+            expect(screen.getByText(/Max length 500 character/)).toBeInTheDocument();
+        });
+
     });
 
 });
