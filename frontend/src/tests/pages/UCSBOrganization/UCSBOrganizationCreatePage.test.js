@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import RestaurantCreatePage from "main/pages/Restaurants/RestaurantCreatePage";
+import UCSBOrganizationCreatePage from "main/pages/UCSBOrganization/UCSBOrganizationCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -29,7 +29,7 @@ jest.mock('react-router-dom', () => {
     };
 });
 
-describe("RestaurantCreatePage tests", () => {
+describe("UCSBOrganizationCreatePage tests", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
 
@@ -46,58 +46,70 @@ describe("RestaurantCreatePage tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <RestaurantCreatePage />
+                    <UCSBOrganizationCreatePage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
     });
 
-    test("on submit, makes request to backend, and redirects to /restaurants", async () => {
+    test("on submit, makes request to backend, and redirects to /UCSBOrganization", async () => {
 
         const queryClient = new QueryClient();
-        const restaurant = {
-            id: 3,
-            name: "South Coast Deli",
-            description: "Sandwiches and Salads"
+        const organization = {
+            orgCode: "OSLI",
+            orgTranslationShort: "STUDENT LIFE",
+            orgTranslation: "OFFICE OF STUDENT LIFE",
+            inactive: false
         };
 
-        axiosMock.onPost("/api/restaurants/post").reply(202, restaurant);
+        axiosMock.onPost("/api/UCSBOrganization/post").reply(202, organization);
 
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <RestaurantCreatePage />
+                    <UCSBOrganizationCreatePage />
                 </MemoryRouter>
             </QueryClientProvider>
         )
 
         await waitFor(() => {
-            expect(screen.getByLabelText("Name")).toBeInTheDocument();
+            expect(screen.getByLabelText("Organization Code")).toBeInTheDocument();
         });
 
-        const nameInput = screen.getByLabelText("Name");
-        expect(nameInput).toBeInTheDocument();
+        const orgCodeInput = screen.getByLabelText("Organization Code");
+        expect(orgCodeInput).toBeInTheDocument();
 
-        const descriptionInput = screen.getByLabelText("Description");
-        expect(descriptionInput).toBeInTheDocument();
+        const orgTranslationShortInput = screen.getByLabelText("Organization Translation (short)");
+        expect(orgTranslationShortInput).toBeInTheDocument();
+
+        const orgTranslationInput = screen.getByLabelText("Organization Translation");
+        expect(orgTranslationInput).toBeInTheDocument();
+
+        const inactiveInput = screen.getByLabelText("Inactive");
+        expect(inactiveInput).toBeInTheDocument();
 
         const createButton = screen.getByText("Create");
         expect(createButton).toBeInTheDocument();
 
-        fireEvent.change(nameInput, { target: { value: 'South Coast Deli' } })
-        fireEvent.change(descriptionInput, { target: { value: 'Sandwiches and Salads' } })
+        fireEvent.change(orgCodeInput, { target: { value: 'OSLI' } })
+        fireEvent.change(orgTranslationShortInput, { target: { value: 'STUDENT LIFE' } })
+        fireEvent.change(orgTranslationInput, { target: { value: 'OFFICE OF STUDENT LIFE' } })
+        fireEvent.click(inactiveInput);
         fireEvent.click(createButton);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
         expect(axiosMock.history.post[0].params).toEqual({
-            name: "South Coast Deli",
-            description: "Sandwiches and Salads"
+            orgCode: "OSLI",
+            orgTranslationShort: "STUDENT LIFE",
+            orgTranslation: "OFFICE OF STUDENT LIFE",
+            inactive: true
+
         });
 
         // assert - check that the toast was called with the expected message
-        expect(mockToast).toBeCalledWith("New restaurant Created - id: 3 name: South Coast Deli");
-        expect(mockNavigate).toBeCalledWith({ "to": "/restaurants" });
+        expect(mockToast).toBeCalledWith("New organization Created - orgCode: OSLI");
+        expect(mockNavigate).toBeCalledWith({ "to": "/UCSBOrganization" });
 
     });
 });

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import UCSBOrganizationForm from "main/components/UCSBOrganization/UCSBOrganizationForm";
+import UCSBOrganizationForm from "main/components/UCSBOrganization/UCSBOrganizationEditForm";
 import { UCSBOrganizationFixtures } from "fixtures/UCSBOrganizationFixtures";
 
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -91,19 +91,14 @@ describe("UCSBOrganizationForm tests", () => {
         const submitButton = screen.getByText(/Create/);
         fireEvent.click(submitButton);
 
-        await screen.findByText(/Organization code is required/);
-        expect(screen.getByText(/Shortened organization translation is required/)).toBeInTheDocument();
+        await screen.findByText(/Shortened organization translation is required/);
         expect(screen.getByText(/Organization translation is required/)).toBeInTheDocument();
 
-        const orgCodeInput = screen.getByTestId(`${testId}-orgCode`);
-        fireEvent.change(orgCodeInput, { target: { value: "a".repeat(6) } });
-
-        const orgTranslationShortInput = screen.getByTestId(`${testId}-orgTranslationShort`);
-        fireEvent.change(orgTranslationShortInput, { target: { value: "a".repeat(51) } });
+        const nameInput = screen.getByTestId(`${testId}-orgTranslationShort`);
+        fireEvent.change(nameInput, { target: { value: "a".repeat(51) } });
         fireEvent.click(submitButton);
 
         await waitFor(() => {
-            expect(screen.getByText(/Max length 5 characters/)).toBeInTheDocument();
             expect(screen.getByText(/Max length 50 characters/)).toBeInTheDocument();
         });
     });
