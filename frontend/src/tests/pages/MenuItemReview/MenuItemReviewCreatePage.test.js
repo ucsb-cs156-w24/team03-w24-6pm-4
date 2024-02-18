@@ -56,10 +56,12 @@ describe("MenuItemReviewCreatePage tests", () => {
 
         const queryClient = new QueryClient();
         const review = {
-            id: 4,
-            diningCommonsCode: "carrillo",
-            name: "Pepperoni Pizza",
-            station: "Pizza"
+            id: 3,
+            itemId: 10,
+            reviewerEmail: "sora@ucsb.edu",
+            stars: 1,
+            dateReviewed: "2024-02-15T00:00:00",
+            comments: "They toss pineapple on pizza!"
         };
 
         axiosMock.onPost("/api/menuitemreview/post").reply(202, review);
@@ -73,36 +75,46 @@ describe("MenuItemReviewCreatePage tests", () => {
         )
 
         await waitFor(() => {
-            expect(screen.getByLabelText("Dining Commons Code")).toBeInTheDocument();
+            expect(screen.getByLabelText("Item ID")).toBeInTheDocument();
         });
 
-        const diningCommonsCodeInput = screen.getByLabelText("Dining Commons Code");
-        expect(diningCommonsCodeInput).toBeInTheDocument();
+        const itemIdInput = screen.getByLabelText("Item ID");
+        expect(itemIdInput).toBeInTheDocument();
 
-        const nameInput = screen.getByLabelText("Name");
-        expect(nameInput).toBeInTheDocument();
+        const reviewerEmailInput = screen.getByLabelText("Reviewer Email");
+        expect(reviewerEmailInput).toBeInTheDocument();
 
-        const stationInput = screen.getByLabelText("Station");
-        expect(stationInput).toBeInTheDocument();
+        const starsInput = screen.getByLabelText("Stars");
+        expect(starsInput).toBeInTheDocument();
+
+        const dateReviewedInput = screen.getByLabelText("Date Reviewed");
+        expect(dateReviewedInput).toBeInTheDocument();
+
+        const commentsInput = screen.getByLabelText("Comments");
+        expect(commentsInput).toBeInTheDocument();
 
         const createButton = screen.getByText("Create");
         expect(createButton).toBeInTheDocument();
 
-        fireEvent.change(diningCommonsCodeInput, { target: { value: 'carrillo' } })
-        fireEvent.change(nameInput, { target: { value: 'Pepperoni Pizza' } })
-        fireEvent.change(stationInput, { target: { value: 'Pizza' } })
+        fireEvent.change(itemIdInput, { target: { value: '10' } })
+        fireEvent.change(reviewerEmailInput, { target: { value: 'sora@ucsb.edu' } })
+        fireEvent.change(starsInput, { target: { value: '1' } })
+        fireEvent.change(dateReviewedInput, { target: { value: '2024-02-15T00:00' } })
+        fireEvent.change(commentsInput, { target: { value: 'They toss pineapple on pizza!' } })
         fireEvent.click(createButton);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
         expect(axiosMock.history.post[0].params).toEqual({
-            diningCommonsCode: "carrillo",
-            name: "Pepperoni Pizza",
-            station: "Pizza"
+            itemId: "10",
+            reviewerEmail: "sora@ucsb.edu",
+            stars: "1",
+            dateReviewed: "2024-02-15T00:00",
+            comments: "They toss pineapple on pizza!"
         });
 
         // assert - check that the toast was called with the expected message
-        expect(mockToast).toBeCalledWith("New review Created - id: 4 name: Pepperoni Pizza");
+        expect(mockToast).toBeCalledWith("New review Created - id: 3 itemId: 10 reviewerEmail: sora@ucsb.edu");
         expect(mockNavigate).toBeCalledWith({ "to": "/menuitemreview" });
 
     });

@@ -21,20 +21,23 @@ export default function MenuItemReviewEditPage({storybook=false}) {
             }
         );
 
-    const objectToAxiosPutParams = (review) => ({
+    const objectToAxiosPutParams = (menuItemReview) => ({
         url: "/api/menuitemreview",
         method: "PUT",
         params: {
-            id: review.id,
+            id: menuItemReview.id,
         },
         data: {
-            name: review.name,
-            description: review.description,
+            itemId: menuItemReview.itemId,
+            reviewerEmail: menuItemReview.reviewerEmail,
+            stars: menuItemReview.stars,
+            dateReviewed: menuItemReview.dateReviewed,
+            comments: menuItemReview.comments,
         }
     });
 
-    const onSuccess = (review) => {
-        toast(`Review Updated - id: ${review.id} name: ${review.name}`);
+    const onSuccess = (menuItemReview) => {
+        toast(`Review Updated - id: ${menuItemReview.id} itemId: ${menuItemReview.itemId} reviewerEmail: ${menuItemReview.reviewerEmail}`);
     }
 
     const mutation = useBackendMutation(
@@ -57,7 +60,7 @@ export default function MenuItemReviewEditPage({storybook=false}) {
     return (
         <BasicLayout>
             <div className="pt-2">
-                <h1>Edit Review</h1>
+                <h1>Edit MenuItemReview</h1>
                 {
                     menuItemReview && <MenuItemReviewForm submitAction={onSubmit} buttonLabel={"Update"} initialContents={menuItemReview} />
                 }

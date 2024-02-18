@@ -10,14 +10,16 @@ export default function MenuItemReviewCreatePage({storybook=false}) {
     url: "/api/menuitemreview/post",
     method: "POST",
     params: {
-     diningCommonsCode: review.diningCommonsCode,
-     name: review.name,
-     station: review.station
+      itemId: review.itemId,
+      reviewerEmail: review.reviewerEmail,
+      stars: review.stars,
+      dateReviewed: review.dateReviewed,
+      comments: review.comments
     }
   });
 
   const onSuccess = (review) => {
-    toast(`New review Created - id: ${review.id} name: ${review.name}`);
+    toast(`New review Created - id: ${review.id} itemId: ${review.itemId} reviewerEmail: ${review.reviewerEmail}`);
   }
 
   const mutation = useBackendMutation(
