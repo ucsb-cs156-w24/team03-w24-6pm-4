@@ -104,6 +104,9 @@ describe("UCSBOrganizationForm tests", () => {
 
         await waitFor(() => {
             expect(screen.getByText(/Max length 5 characters/)).toBeInTheDocument();
+        });
+
+        await waitFor(() => {
             expect(screen.getByText(/Max length 50 characters/)).toBeInTheDocument();
         });
     });
