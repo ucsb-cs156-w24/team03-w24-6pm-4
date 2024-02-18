@@ -31,20 +31,28 @@ export default function MenuItemReviewTable({
 
     const columns = [
         {
-            Header: 'id',
+            Header: 'ID',
             accessor: 'id', // accessor is the "key" in the data
         },
         {
-            Header: 'Dining Commons Code',
-            accessor: 'diningCommonsCode',
+            Header: 'Item ID',
+            accessor: 'itemId',
         },
         {
-            Header: 'Name',
-            accessor: 'name',
+            Header: 'Reviewer Email',
+            accessor: 'reviewerEmail',
         },
         {
-            Header: 'Station',
-            accessor: 'station',
+            Header: 'Stars',
+            accessor: 'stars',
+        },
+        {
+            Header: 'Date Reviewed',
+            accessor: 'dateReviewed',
+        },
+        {
+            Header: 'Comments',
+            accessor: 'comments',
         }
     ];
 

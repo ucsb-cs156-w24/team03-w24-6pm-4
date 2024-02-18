@@ -16,8 +16,8 @@ jest.mock('react-router-dom', () => ({
 describe("MenuItemReviewTable tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["id", "Dining Commons Code", "Name", "Station"];
-  const expectedFields = ["id", "diningCommonsCode", "name", "station"];
+  const expectedHeaders = ["ID", "Item ID", "Reviewer Email", "Stars", "Date Reviewed", "Comments"];
+  const expectedFields = ["id", "itemId", "reviewerEmail", "stars", "dateReviewed", "comments"];
   const testId = "MenuItemReviewTable";
 
   test("renders empty table correctly", () => {
@@ -71,19 +71,25 @@ describe("MenuItemReviewTable tests", () => {
     });
 
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`)).toHaveTextContent("ortega");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-name`)).toHaveTextContent("Apple Pie");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-station`)).toHaveTextContent("Desserts");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-itemId`)).toHaveTextContent("7");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-reviewerEmail`)).toHaveTextContent("cgaucho@ucsb.edu");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-stars`)).toHaveTextContent("5");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-dateReviewed`)).toHaveTextContent("2022-01-02T12:00:00");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-comments`)).toHaveTextContent("I love the Apple Pie.");
 
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-diningCommonsCode`)).toHaveTextContent("portola");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-name`)).toHaveTextContent("Turkey Sandwich");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-station`)).toHaveTextContent("Sandwiches");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-itemId`)).toHaveTextContent("7");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-reviewerEmail`)).toHaveTextContent("ldelplaya@ucsb.edu");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-stars`)).toHaveTextContent("0");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-dateReviewed`)).toHaveTextContent("2022-04-03T12:00:00");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-comments`)).toHaveTextContent("I hate the Apple Pie.");
 
     expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
-    expect(screen.getByTestId(`${testId}-cell-row-2-col-diningCommonsCode`)).toHaveTextContent("de-la-guerra");
-    expect(screen.getByTestId(`${testId}-cell-row-2-col-name`)).toHaveTextContent("Coffee Latte");
-    expect(screen.getByTestId(`${testId}-cell-row-2-col-station`)).toHaveTextContent("Beverages");    
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-itemId`)).toHaveTextContent("10");
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-reviewerEmail`)).toHaveTextContent("sora@ucsb.edu");
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-stars`)).toHaveTextContent("1");
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-dateReviewed`)).toHaveTextContent("2024-02-15T00:00:00");
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-comments`)).toHaveTextContent("They toss pineapple on pizza!");   
 
     const editButton = screen.getByTestId(`${testId}-cell-row-0-col-Edit-button`);
     expect(editButton).toBeInTheDocument();
@@ -120,19 +126,25 @@ describe("MenuItemReviewTable tests", () => {
     });
 
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`)).toHaveTextContent("ortega");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-name`)).toHaveTextContent("Apple Pie");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-station`)).toHaveTextContent("Desserts");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-itemId`)).toHaveTextContent("7");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-reviewerEmail`)).toHaveTextContent("cgaucho@ucsb.edu");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-stars`)).toHaveTextContent("5");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-dateReviewed`)).toHaveTextContent("2022-01-02T12:00:00");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-comments`)).toHaveTextContent("I love the Apple Pie.");
 
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-diningCommonsCode`)).toHaveTextContent("portola");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-name`)).toHaveTextContent("Turkey Sandwich");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-station`)).toHaveTextContent("Sandwiches");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-itemId`)).toHaveTextContent("7");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-reviewerEmail`)).toHaveTextContent("ldelplaya@ucsb.edu");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-stars`)).toHaveTextContent("0");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-dateReviewed`)).toHaveTextContent("2022-04-03T12:00:00");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-comments`)).toHaveTextContent("I hate the Apple Pie.");
 
     expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
-    expect(screen.getByTestId(`${testId}-cell-row-2-col-diningCommonsCode`)).toHaveTextContent("de-la-guerra");
-    expect(screen.getByTestId(`${testId}-cell-row-2-col-name`)).toHaveTextContent("Coffee Latte");
-    expect(screen.getByTestId(`${testId}-cell-row-2-col-station`)).toHaveTextContent("Beverages");  
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-itemId`)).toHaveTextContent("10");
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-reviewerEmail`)).toHaveTextContent("sora@ucsb.edu");
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-stars`)).toHaveTextContent("1");
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-dateReviewed`)).toHaveTextContent("2024-02-15T00:00:00");
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-comments`)).toHaveTextContent("They toss pineapple on pizza!");   
 
     expect(screen.queryByText("Delete")).not.toBeInTheDocument();
     expect(screen.queryByText("Edit")).not.toBeInTheDocument();
@@ -154,9 +166,11 @@ describe("MenuItemReviewTable tests", () => {
 
     // assert - check that the expected content is rendered
     expect(await screen.findByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-diningCommonsCode`)).toHaveTextContent("portola");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-name`)).toHaveTextContent("Turkey Sandwich");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-station`)).toHaveTextContent("Sandwiches");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-itemId`)).toHaveTextContent("7");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-reviewerEmail`)).toHaveTextContent("ldelplaya@ucsb.edu");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-stars`)).toHaveTextContent("0");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-dateReviewed`)).toHaveTextContent("2022-04-03T12:00:00");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-comments`)).toHaveTextContent("I hate the Apple Pie.");
 
     const editButton = screen.getByTestId(`${testId}-cell-row-1-col-Edit-button`);
     expect(editButton).toBeInTheDocument();
@@ -184,7 +198,7 @@ describe("MenuItemReviewTable tests", () => {
 
     // assert - check that the expected content is rendered
     expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`)).toHaveTextContent("ortega");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-itemId`)).toHaveTextContent("7");
 
     const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
     expect(deleteButton).toBeInTheDocument();
