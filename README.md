@@ -1,15 +1,11 @@
-# STARTER-team03
+# team03-w24-6pm-4
 
-Instructions: <https://ucsb-cs156.github.io/f23/lab/team03.html>
-
-TODO: change heading above to your repo name, e.g. `# team03-f23-9am-4`
-
-TODO: Add a link to the deployed Dokku app for your team here, e.g.
+Instructions: <https://ucsb-cs156.github.io/w24/lab/team03.html>
 
 Deployments:
 
-* Prod: <https://team03.dokku-17.cs.ucsb.edu>
-* QA: <https://team03-qa.dokku-17.cs.ucsb.edu>
+* Prod: <https://team03.dokku-12.cs.ucsb.edu>
+* QA: <https://team03-qa.dokku-12.cs.ucsb.edu>
 
 | Table                     | Name         | Github Id      |
 |---------------------------|--------------|----------------|
