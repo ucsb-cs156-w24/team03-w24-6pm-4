@@ -17,6 +17,12 @@ function MenuItemReviewForm({ initialContents, submitAction, buttonLabel = "Crea
    
     const navigate = useNavigate();
 
+    // For explanation, see: https://stackoverflow.com/questions/3143070/javascript-regex-iso-datetime
+    // Note that even this complex regex may still need some tweaks
+
+    // Stryker disable next-line Regex
+    const isodate_regex = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
+
     const testIdPrefix = "MenuItemReviewForm";
 
     return (
@@ -24,7 +30,7 @@ function MenuItemReviewForm({ initialContents, submitAction, buttonLabel = "Crea
 
             {initialContents && (
                 <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="id">Id</Form.Label>
+                    <Form.Label htmlFor="id">ID</Form.Label>
                     <Form.Control
                         data-testid={testIdPrefix + "-id"}
                         id="id"
@@ -37,30 +43,30 @@ function MenuItemReviewForm({ initialContents, submitAction, buttonLabel = "Crea
             )}
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="diningCommonsCode">Dining Commons Code</Form.Label>
+                <Form.Label htmlFor="itemId">Item ID</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-diningCommonsCode"}
-                    id="diningCommonsCode"
+                    data-testid={testIdPrefix + "-itemId"}
+                    id="itemId"
                     type="text"
-                    isInvalid={Boolean(errors.diningCommonsCode)}
-                    {...register("diningCommonsCode", {
-                        required: "Dining Commons Code is required."
+                    isInvalid={Boolean(errors.itemId)}
+                    {...register("itemId", {
+                        required: "Item ID is required."
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.diningCommonsCode?.message}
+                    {errors.itemId?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="name">Name</Form.Label>
+                <Form.Label htmlFor="reviewerEmail">Reviewer Email</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-name"}
-                    id="name"
+                    data-testid={testIdPrefix + "-reviewerEmail"}
+                    id="reviewerEmail"
                     type="text"
-                    isInvalid={Boolean(errors.name)}
-                    {...register("name", {
-                        required: "Name is required.",
+                    isInvalid={Boolean(errors.reviewerEmail)}
+                    {...register("reviewerEmail", {
+                        required: "Reviewer Email is required.",
                         maxLength : {
                             value: 30,
                             message: "Max length 30 characters"
@@ -68,23 +74,68 @@ function MenuItemReviewForm({ initialContents, submitAction, buttonLabel = "Crea
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.name?.message}
+                    {errors.reviewerEmail?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="station">Station</Form.Label>
+                <Form.Label htmlFor="stars">Stars</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-station"}
-                    id="station"
-                    type="text"
-                    isInvalid={Boolean(errors.station)}
-                    {...register("station", {
-                        required: "Station is required."
+                    data-testid={testIdPrefix + "-stars"}
+                    id="stars"
+                    type="number"
+                    isInvalid={Boolean(errors.stars)}
+                    {...register("stars", {
+                        required: "Star rating is required.",
+                        min: {
+                            value: 0,
+                            message: "Minimum value is 0"
+                        },
+                        max: {
+                            value: 5,
+                            message: "Maximum value is 5"
+                        }
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.station?.message}
+                    {errors.stars?.message}
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="dateReviewed">Date Reviewed</Form.Label>
+                <Form.Control
+                    data-testid={testIdPrefix + "-dateReviewed"}
+                    id="dateReviewed"
+                    type="datetime-local"
+                    isInvalid={Boolean(errors.dateReviewed)}
+                    {...register("dateReviewed", {
+                        required: "Date Reviewed is required.",
+                        pattern: isodate_regex
+                    })}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.dateReviewed?.message}
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="comments">Comments</Form.Label>
+                <Form.Control
+                    data-testid={testIdPrefix + "-comments"}
+                    id="comments"
+                    type="text"
+                    isInvalid={Boolean(errors.comments)}
+                    {...register("comments", {
+                        required: "Comment is required.",
+                        maxLength : {
+                            value: 500,
+                            message: "Max length 500 characters"
+                        }
+                    })}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.comments?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
