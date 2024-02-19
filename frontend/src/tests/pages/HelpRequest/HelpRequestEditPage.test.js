@@ -44,7 +44,7 @@ describe("HelpRequestEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/helprequest", { params: { id: 17 } }).timeout();
+            axiosMock.onGet("/api/helprequests", { params: { id: 17 } }).timeout();
         });
 
         const queryClient = new QueryClient();
@@ -74,7 +74,7 @@ describe("HelpRequestEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/helprequest", { params: { id: 17 } }).reply(200, {
+            axiosMock.onGet("/api/helprequests", { params: { id: 17 } }).reply(200, {
                 id: 17,
                 requesterEmail: 'cgaucho@ucsb.edu',
                 teamId: "s22-5pm-3",
@@ -83,7 +83,7 @@ describe("HelpRequestEditPage tests", () => {
                 explanation: "Dokku Problem",
                 solved: false
             });
-            axiosMock.onPut('/api/helprequest').reply(200, {
+            axiosMock.onPut('/api/helprequests').reply(200, {
                 id: "17",
                 requesterEmail: 'ldelplaya@ucsb.edu',
                 teamId: "s22-6pm-3",
@@ -146,7 +146,7 @@ describe("HelpRequestEditPage tests", () => {
                 </QueryClientProvider>
             );
 
-            await screen.findByTestId("HelpRequestForm-requesterEmail");
+            await screen.findByTestId("HelpRequestForm-id");
 
             const idField = screen.getByTestId("HelpRequestForm-id");
             const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
@@ -177,7 +177,7 @@ describe("HelpRequestEditPage tests", () => {
 
             await waitFor(() => expect(mockToast).toBeCalled());
             expect(mockToast).toBeCalledWith("HelpRequest Updated - id: 17 requesterEmail: ldelplaya@ucsb.edu");
-            expect(mockNavigate).toBeCalledWith({ "to": "/helprequest" });
+            expect(mockNavigate).toBeCalledWith({ "to": "/helprequests" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called
             expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
