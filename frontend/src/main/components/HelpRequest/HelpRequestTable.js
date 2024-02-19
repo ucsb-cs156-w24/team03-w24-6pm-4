@@ -54,8 +54,8 @@ export default function HelpRequestTable({ requests, currentUser }) {
         },
         {
             Header: 'Solved',
-            accessor: 'solved',
-        },
+            accessor: (row) => row.solved ? 'Yes' : 'No'
+        }
     ];
 
     if (hasRole(currentUser, "ROLE_ADMIN")) {
