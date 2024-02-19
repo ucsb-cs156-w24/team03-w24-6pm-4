@@ -29,8 +29,8 @@ describe("UserTable tests", () => {
 
     );
 
-    const expectedHeaders = ["id", "Requester Email", "Request Time", "Team ID", "Table or Breakout Room", "Explanation"];
-    const expectedFields = ["id", "requesterEmail", "requestTime", "teamId", "tableOrBreakoutRoom", "explanation"];
+    const expectedHeaders = ["id", "Requester Email", "Request Time", "Team ID", "Table or Breakout Room", "Explanation","Solved"];
+    const expectedFields = ["id", "requesterEmail", "requestTime", "teamId", "tableOrBreakoutRoom", "explanation", "solved"];
     const testId = "HelpRequestTable";
 
     expectedHeaders.forEach((headerText) => {
@@ -45,6 +45,8 @@ describe("UserTable tests", () => {
 
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-solved`)).toHaveTextContent("No");
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-solved`)).toHaveTextContent("Yes");
 
     const editButton = screen.queryByTestId(`${testId}-cell-row-0-col-Edit-button`);
     expect(editButton).not.toBeInTheDocument();
@@ -119,4 +121,3 @@ describe("UserTable tests", () => {
   });
 
 });
-
