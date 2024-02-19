@@ -61,7 +61,7 @@ describe("RecommendationRequestCreatePage tests", () => {
             explanation: "BS/MS Program UCSB",
             dateRequested: "2020-02-14T12:34:05.000",
             dateNeeded: "2020-03-14T11:59:59.000",
-            done: true
+            done: "true"
         };
 
         axiosMock.onPost("/api/recommendationrequests/post").reply(202, recommendationRequest);
@@ -104,7 +104,7 @@ describe("RecommendationRequestCreatePage tests", () => {
         fireEvent.change(explanationInput, { target: { value: 'BS/MS Program UCSB' } })
         fireEvent.change(dateRequestedInput, { target: { value: '2020-02-14T12:34:05.000' } })
         fireEvent.change(dateNeededInput, { target: { value: '2020-03-14T11:59:59.00' } })
-        fireEvent.click(doneInput, { target: { checked: false } })
+        fireEvent.click(doneInput);
         fireEvent.click(createButton);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
@@ -115,7 +115,7 @@ describe("RecommendationRequestCreatePage tests", () => {
             explanation: "BS/MS Program UCSB",
             dateRequested: "2020-02-14T12:34:05.000",
             dateNeeded: "2020-03-14T11:59:59.000",
-            done: true   
+            done: "true"
         });
 
         // assert - check that the toast was called with the expected message
