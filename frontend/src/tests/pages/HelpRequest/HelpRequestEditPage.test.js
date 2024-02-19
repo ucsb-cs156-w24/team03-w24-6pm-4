@@ -27,7 +27,7 @@ jest.mock('react-router-dom', () => {
         __esModule: true,
         ...originalModule,
         useParams: () => ({
-            id: 17
+            id: 12
         }),
         Navigate: (x) => { mockNavigate(x); return null; }
     };
@@ -44,7 +44,7 @@ describe("HelpRequestEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/helprequest", { params: { id: 17 } }).timeout();
+            axiosMock.onGet("/api/helprequest", { params: { id: 12 } }).timeout();
         });
 
         const queryClient = new QueryClient();
@@ -74,8 +74,8 @@ describe("HelpRequestEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/helprequest", { params: { id: 17 } }).reply(200, {
-                id: 17,
+            axiosMock.onGet("/api/helprequest", { params: { id: 12 } }).reply(200, {
+                id: 12,
                 requesterEmail: 'cgaucho@ucsb.edu',
                 teamId: "s22-5pm-3",
                 tableOrBreakoutRoom: "7",
@@ -84,7 +84,7 @@ describe("HelpRequestEditPage tests", () => {
                 solved: false
             });
             axiosMock.onPut('/api/helprequest').reply(200, {
-                id: "17",
+                id: "12",
                 requesterEmail: 'ldelplaya@ucsb.edu',
                 teamId: "s22-6pm-3",
                 tableOrBreakoutRoom: "11",
@@ -126,7 +126,7 @@ describe("HelpRequestEditPage tests", () => {
             const solvedField = screen.getByTestId("HelpRequestForm-solved");
             const submitButton = screen.getByTestId("HelpRequestForm-submit");
 
-            expect(idField).toHaveValue("17");
+            expect(idField).toHaveValue("12");
             expect(requesterEmailField).toHaveValue("cgaucho@ucsb.edu");
             expect(teamIdField).toHaveValue("s22-5pm-3");
             expect(tableOrBreakoutRoomField).toHaveValue("7");
@@ -157,7 +157,7 @@ describe("HelpRequestEditPage tests", () => {
             const solvedField = screen.getByTestId("HelpRequestForm-solved");
             const submitButton = screen.getByTestId("HelpRequestForm-submit");
 
-            expect(idField).toHaveValue("17");
+            expect(idField).toHaveValue("12");
             expect(requesterEmailField).toHaveValue("cgaucho@ucsb.edu");
             expect(teamIdField).toHaveValue("s22-5pm-3");
             expect(tableOrBreakoutRoomField).toHaveValue("7");
@@ -176,11 +176,11 @@ describe("HelpRequestEditPage tests", () => {
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled());
-            expect(mockToast).toBeCalledWith("HelpRequest Updated - id: 17 requesterEmail: ldelplaya@ucsb.edu");
+            expect(mockToast).toBeCalledWith("HelpRequest Updated - id: 12 requesterEmail: ldelplaya@ucsb.edu");
             expect(mockNavigate).toBeCalledWith({ "to": "/helprequest" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called
-            expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
+            expect(axiosMock.history.put[0].params).toEqual({ id: 12 });
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
                 requesterEmail: 'ldelplaya@ucsb.edu',
                 teamId: "s22-6pm-3",

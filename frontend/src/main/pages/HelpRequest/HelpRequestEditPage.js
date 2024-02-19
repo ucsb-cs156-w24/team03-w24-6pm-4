@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 export default function HelpRequestEditPage({storybook=false}) {
   let { id } = useParams();
 
-  const { data: helpRequest, _error, _status } =
+  const { data: requests, _error, _status } =
     useBackend(
       // Stryker disable next-line all : don't test internal caching of React Query
       [`/api/helprequests?id=${id}`],
@@ -22,24 +22,24 @@ export default function HelpRequestEditPage({storybook=false}) {
     );
 
 
-  const objectToAxiosPutParams = (helpRequest) => ({
+  const objectToAxiosPutParams = (requests) => ({
     url: "/api/helprequests",
     method: "PUT",
     params: {
-      id: helpRequest.id,
+      id: requests.id,
     },
     data: {
-      requesterEmail: helpRequest.requesterEmail,
-      teamId: helpRequest.teamId,
-      tableOrBreakoutRoom: helpRequest.tableOrBreakoutRoom,
-      requestTime: helpRequest.requestTime,
-      explanation: helpRequest.explanation,
-      solved: helpRequest.solved
+      requesterEmail: requests.requesterEmail,
+      teamId: requests.teamId,
+      tableOrBreakoutRoom: requests.tableOrBreakoutRoom,
+      requestTime: requests.requestTime,
+      explanation: requests.explanation,
+      solved: requests.solved
     }
   });
 
-  const onSuccess = (helpRequest) => {
-    toast(`HelpRequest Updated - id: ${helpRequest.id} name: ${helpRequest.name}`);
+  const onSuccess = (requests) => {
+    toast(`HelpRequest Updated - id: ${requests.id} email: ${requests.requesterEmail}`);
   }
 
   const mutation = useBackendMutation(
@@ -64,7 +64,7 @@ export default function HelpRequestEditPage({storybook=false}) {
       <div className="pt-2">
         <h1>Edit HelpRequest</h1>
         {
-          helpRequest && <HelpRequestForm initialContents={helpRequest} submitAction={onSubmit} buttonLabel="Update" />
+          requests && <HelpRequestForm initialContents={requests} submitAction={onSubmit} buttonLabel="Update" />
         }
       </div>
     </BasicLayout>

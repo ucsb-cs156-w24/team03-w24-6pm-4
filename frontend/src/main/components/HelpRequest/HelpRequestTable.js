@@ -29,7 +29,7 @@ export default function HelpRequestTable({ requests, currentUser }) {
 
     const columns = [
         {
-            Header: 'id',
+            Header: 'Id',
             accessor: 'id', // accessor is the "key" in the data
         },
         {
@@ -37,7 +37,7 @@ export default function HelpRequestTable({ requests, currentUser }) {
             accessor: 'requesterEmail',
         },
         {
-            Header: 'Request Time',
+            Header: 'Request Time (iso format)',
             accessor: 'requestTime',
         },
         {
