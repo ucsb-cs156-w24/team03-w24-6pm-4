@@ -129,6 +129,7 @@ describe("ArticlesEditPage tests", () => {
             expect(urlField).toHaveValue("https://www.Article1.com");
             expect(explanationField).toHaveValue("First Article");
             expect(submitButton).toBeInTheDocument();
+            expect(submitButton).toHaveTextContent("Update");
         });
 
         test("Changes when you click Update", async () => {
