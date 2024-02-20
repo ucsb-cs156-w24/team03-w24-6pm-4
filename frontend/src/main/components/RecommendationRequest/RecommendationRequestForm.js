@@ -24,6 +24,7 @@ function RecommendationRequestForm({ initialContents, submitAction, buttonLabel 
     const testIdPrefix = "RecommendationRequestForm";
     // Stryker disable next-line all
     // const yyyyq_regex = /((19)|(20))\d{2}[1-4]/i; // Accepts from 1900-2099 followed by 1-4.  Close enough.
+    const email_regex = /[a-zA-Z0-9]@[a-zA-Z0-9]+\.[a-zA-Z]/i;
 
     return (
         <Form onSubmit={handleSubmit(submitAction)}>
@@ -49,13 +50,12 @@ function RecommendationRequestForm({ initialContents, submitAction, buttonLabel 
                     id="requesterEmail"
                     type="text"
                     isInvalid={Boolean(errors.requesterEmail)}
-                    {...register("requesterEmail", {
-                        required: "Requester Email is required.",
-                    })}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {errors.requesterEmail?.message}
-                </Form.Control.Feedback>
+                    {...register("requesterEmail", { required: true, pattern: email_regex})}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.requesterEmail && "Requester Email is required."}
+                        {errors.requesterEmail?.type === "pattern" && "Requester Email must be a valid email."}
+                    </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" >
@@ -65,13 +65,12 @@ function RecommendationRequestForm({ initialContents, submitAction, buttonLabel 
                     id="professorEmail"
                     type="text"
                     isInvalid={Boolean(errors.professorEmail)}
-                    {...register("professorEmail", {
-                        required: "Professor Email is required.",
-                    })}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {errors.professorEmail?.message}
-                </Form.Control.Feedback>
+                    {...register("professorEmail", { required: true, pattern: email_regex})}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                    {errors.professorEmail && "Professor Email is required."}
+                    {errors.professorEmail?.type === "pattern" && "Professor Email must be a valid email."}
+                    </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" >
@@ -119,15 +118,23 @@ function RecommendationRequestForm({ initialContents, submitAction, buttonLabel 
                     </Form.Group>
 
             <Form.Group className="mb-3">
+                <Form.Label htmlFor="done">Done</Form.Label>
                 <Form.Check
                    data-testid={testIdPrefix + "-done"}
                    id="done"
-                   label = "Done"
-                   type="checkbox"
+                   type="switch"
                    {...register("done")}
                />
             </Form.Group>
 
+            {/* <Form.Label htmlFor="done">Done</Form.Label>
+                <Form.Control
+                    data-testid="done"
+                    id="done"
+                    type="switch"
+                    isInvalid={Boolean(errors.done)}
+                    {...register("done")}
+                /> */}
 
             <Button
                 type="submit"
