@@ -93,8 +93,11 @@ describe("RecommendationRequestForm tests", () => {
         await screen.findByTestId(/dateNeeded/);
         expect(screen.getByTestId(/dateNeeded/)).toHaveValue("2020-03-14T11:59:59.000");
 
-        await screen.findByTestId(/done/);
-        expect(screen.getByTestId(/done/)).toBeChecked("true");
+        await screen.findByTestId(/RecommendationRequestForm-done/);
+        expect(screen.getByTestId(/RecommendationRequestForm-done/)).toBeChecked();
+
+        expect(screen.queryByText(/Requester Email must be a valid email./)).not.toBeInTheDocument();
+        expect(screen.queryByText(/Professor Email must be a valid email./)).not.toBeInTheDocument();
     });
 
 
@@ -133,7 +136,28 @@ describe("RecommendationRequestForm tests", () => {
         expect(screen.getByText(/Explanation is required./)).toBeInTheDocument();
         expect(screen.getByText(/Date Requested is required./)).toBeInTheDocument();
         expect(screen.getByText(/Date Needed is required./)).toBeInTheDocument();
+    });
 
+    test("Correct Error messsages on bad input", async () => {
+
+        render(
+            <Router  >
+                <RecommendationRequestForm />
+            </Router>
+        );
+
+        expect(await screen.findByText(/Create/)).toBeInTheDocument();
+
+        const requesterEmailInput = screen.getByLabelText("Requester Email");
+        const professorEmailInput = screen.getByLabelText("Professor Email");
+        const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
+
+        fireEvent.change(requesterEmailInput, { target: { value: "&!@^!#&$^&" } })
+        fireEvent.change(professorEmailInput, { target: { value: "992!&@&&!&*CHDBWB" } })
+        fireEvent.click(submitButton);
+
+        await screen.findByText(/Requester Email must be a valid email./);
+        expect(screen.getByText(/Professor Email must be a valid email./)).toBeInTheDocument();
     });
 
 });
