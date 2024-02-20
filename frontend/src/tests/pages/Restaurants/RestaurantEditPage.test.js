@@ -106,7 +106,7 @@ describe("RestaurantEditPage tests", () => {
 
             expect(idField).toBeInTheDocument();
             expect(idField).toHaveValue("17");
-            expect( nameField).toBeInTheDocument();
+            expect(nameField).toBeInTheDocument();
             expect(nameField).toHaveValue("Freebirds");
             expect(descriptionField).toBeInTheDocument();
             expect(descriptionField).toHaveValue("Burritos");
