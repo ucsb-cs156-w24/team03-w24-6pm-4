@@ -7,10 +7,6 @@ import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
-import UCSBorganisationIndexPage from "main/pages/UCSBorganisation/UCSBorganisationIndexPage";
-import UCSBorganisationCreatePage from "main/pages/UCSBorganisation/UCSBorganisationCreatePage";
-import UCSBorganisationEditPage from "main/pages/UCSBorganisation/UCSBorganisationEditPage";
-
 import RestaurantIndexPage from "main/pages/Restaurants/RestaurantIndexPage";
 import RestaurantCreatePage from "main/pages/Restaurants/RestaurantCreatePage";
 import RestaurantEditPage from "main/pages/Restaurants/RestaurantEditPage";
@@ -128,21 +124,6 @@ function App() {
             <>
               <Route exact path="/UCSBOrganization/edit/:orgCode" element={<UCSBOrganizationEditPage />} />
               <Route exact path="/UCSBOrganization/create" element={<UCSBOrganizationCreatePage />} />
-            </>
-          )
-        }
-         {
-          hasRole(currentUser, "ROLE_USER") && (
-            <>
-              <Route exact path="/UCSBOrganization" element={<UCSBorganisationIndexPage />} />
-            </>
-          )
-        }
-        {
-          hasRole(currentUser, "ROLE_ADMIN") && (
-            <>
-              <Route exact path="/UCSBOrganization/edit/:orgCode" element={<UCSBorganisationEditPage />} />
-              <Route exact path="/UCSBOrganization/create" element={<UCSBorganisationCreatePage />} />
             </>
           )
         }
