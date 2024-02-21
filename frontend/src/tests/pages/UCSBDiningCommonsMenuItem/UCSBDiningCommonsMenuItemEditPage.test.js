@@ -122,6 +122,7 @@ describe("UCSBDiningCommonsMenuItemEditPage tests", () => {
             expect(nameField).toHaveValue("Pi Day");
             expect(stationField).toHaveValue("2022-03-14T15:00");
             expect(submitButton).toBeInTheDocument();
+            expect(submitButton).toHaveTextContent("Update");
         });
 
         test("Changes when you click Update", async () => {

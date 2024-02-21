@@ -87,8 +87,12 @@ describe("UCSBDiningCommonsMenuItemIndexPage tests", () => {
         expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
         expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("2");
 
+        const createMenuItemButton = screen.queryByText("Create Menu Item");
+        expect(createMenuItemButton).not.toBeInTheDocument();
+
         // assert that the Create button is not present when user isn't an admin
-        expect(screen.queryByText(/Create UCSBDiningCommonsMenuItem/)).not.toBeInTheDocument();
+        expect(screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`)).not.toBeInTheDocument();
+        expect(screen.queryByTestId(`${testId}-cell-row-0-col-Edit-button`)).not.toBeInTheDocument();
 
     });
 
