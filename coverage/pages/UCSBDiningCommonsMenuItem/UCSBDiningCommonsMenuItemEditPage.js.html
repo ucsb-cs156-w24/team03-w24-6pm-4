@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for pages/Articles/ArticlesEditPage.js</title>
+    <title>Code coverage report for pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemEditPage.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Articles</a> ArticlesEditPage.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/UCSBDiningCommonsMenuItem</a> UCSBDiningCommonsMenuItemEditPage.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -131,9 +131,7 @@
 <a name='L66'></a><a href='#L66'>66</a>
 <a name='L67'></a><a href='#L67'>67</a>
 <a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L69'></a><a href='#L69'>69</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -157,8 +155,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -205,51 +201,49 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams } from "react-router-dom";
-import ArticlesForm from 'main/components/Articles/ArticlesForm';
+import UCSBDiningCommonsMenuItemForm from 'main/components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemForm';
 import { Navigate } from 'react-router-dom'
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 &nbsp;
-export default function ArticlesEditPage({storybook=false}) {
+export default function RestaurantEditPage({storybook=false}) {
     let { id } = useParams();
 &nbsp;
-    const { data: article, _error, _status } =
+    const { data: item, _error, _status } =
         useBackend(
             // Stryker disable next-line all : don't test internal caching of React Query
-            [`/api/articles?id=${id}`],
+            [`/api/ucsbdiningcommonsmenuitem?id=${id}`],
             {  // Stryker disable next-line all : GET is the default, so mutating this to "" doesn't introduce a bug
                 method: "GET",
-                url: `/api/articles`,
+                url: `/api/ucsbdiningcommonsmenuitem`,
                 params: {
                     id
                 }
             }
         );
 &nbsp;
-    const objectToAxiosPutParams = (article) =&gt; ({
-        url: "/api/articles",
+    const objectToAxiosPutParams = (item) =&gt; ({
+        url: "/api/ucsbdiningcommonsmenuitem",
         method: "PUT",
         params: {
-            id: article.id,
+            id: item.id,
         },
         data: {
-            title: article.title,
-            url: article.url,
-            explanation: article.explanation,
-            email: article.email,
-            dateAdded: article.dateAdded,
+            name: item.name,
+            diningCommonsCode: item.diningCommonsCode,
+            station: item.station
         }
     });
 &nbsp;
-    const onSuccess = (article) =&gt; {
-        toast(`Articles Updated - id: ${article.id} title: ${article.title}`);
+    const onSuccess = (item) =&gt; {
+        toast(`UCSBDiningCommonsMenuItem Updated - id: ${item.id} name: ${item.name}`);
     }
 &nbsp;
     const mutation = useBackendMutation(
         objectToAxiosPutParams,
         { onSuccess },
         // Stryker disable next-line all : hard to set up test for caching
-        [`/api/articles?id=${id}`]
+        [`/api/ucsbdiningcommonsmenuitem?id=${id}`]
     );
 &nbsp;
     const { isSuccess } = mutation
@@ -259,15 +253,15 @@ export default function ArticlesEditPage({storybook=false}) {
     }
 &nbsp;
     if (isSuccess &amp;&amp; !storybook) {
-        return &lt;Navigate to="/articles" /&gt;
+        return &lt;Navigate to="/ucsbdiningcommonsmenuitem" /&gt;
     }
 &nbsp;
     return (
         &lt;BasicLayout&gt;
             &lt;div className="pt-2"&gt;
-                &lt;h1&gt;Edit Article&lt;/h1&gt;
+                &lt;h1&gt;Edit Menu Item&lt;/h1&gt;
                 {
-                    article &amp;&amp; &lt;ArticlesForm submitAction={onSubmit} buttonLabel={"Update"} initialContents={article} /&gt;
+                    item &amp;&amp; &lt;UCSBDiningCommonsMenuItemForm submitAction={onSubmit} buttonLabel={"Update"} initialContents={item} /&gt;
                 }
             &lt;/div&gt;
         &lt;/BasicLayout&gt;
