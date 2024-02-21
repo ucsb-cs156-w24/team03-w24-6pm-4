@@ -91,12 +91,20 @@ describe("UCSBOrganizationForm tests", () => {
         const submitButton = screen.getByText(/Create/);
         fireEvent.click(submitButton);
 
-        await screen.findByText(/Shortened organization translation is required/);
+        await screen.findByText(/Organization code is required/);
+        expect(screen.getByText(/Shortened organization translation is required/)).toBeInTheDocument();
         expect(screen.getByText(/Organization translation is required/)).toBeInTheDocument();
 
-        const nameInput = screen.getByTestId(`${testId}-orgTranslationShort`);
-        fireEvent.change(nameInput, { target: { value: "a".repeat(51) } });
+        const orgCodeInput = screen.getByTestId(`${testId}-orgCode`);
+        fireEvent.change(orgCodeInput, { target: { value: "a".repeat(6) } });
+
+        const orgTranslationShortInput = screen.getByTestId(`${testId}-orgTranslationShort`);
+        fireEvent.change(orgTranslationShortInput, { target: { value: "a".repeat(51) } });
         fireEvent.click(submitButton);
+
+        await waitFor(() => {
+            expect(screen.getByText(/Max length 5 characters/)).toBeInTheDocument();
+        });
 
         await waitFor(() => {
             expect(screen.getByText(/Max length 50 characters/)).toBeInTheDocument();
